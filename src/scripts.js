@@ -3,7 +3,7 @@ const winningConditions = [
   [0, 1, 2],
   [3, 4, 5], // all left to right
   [6, 7, 8],
-  // ----
+  //
   [0, 3, 6],
   [1, 4, 7], // all top to bottom
   [2, 5, 8],
@@ -11,8 +11,6 @@ const winningConditions = [
   [0, 4, 8],
   [6, 4, 2], //diagonals
 ];
-
-// testData.some() // research about this Some method
 
 //--------------------------------
 
@@ -51,6 +49,9 @@ socket.on("lost", () => {
 socket.on("picked", (data) => {
   console.log("picked");
   $("#picker").slideUp(500);
+  $(".subtitle").text("Turn: Other");
+  $(".subtitle").slideDown(500);
+  turn = false;
   chosenSymbol = data === "X" ? "O" : "X";
 });
 
@@ -60,6 +61,7 @@ const handleSidePick = () => {
     $("#picker").css("pointer-events", "none");
     $("#picker").slideUp(500, () => $("#picker").css("pointer-events", "auto"));
     socket.emit("picked", side);
+    turn = true;
     $(".subtitle").text("Turn: You");
     $(".subtitle").slideDown(500);
   };
@@ -89,7 +91,7 @@ $(function () {
       }
     );
     $(child).click(function () {
-      if (turn && chosenSymbol) {
+      if (turn && chosenSymbol && $(this).find("span.ghost").length !== 0) {
         $(this).text(chosenSymbol);
         $(this).removeClass("ghost");
         turn = false;

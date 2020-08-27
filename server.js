@@ -13,6 +13,8 @@ app.get("*", function (_, res) {
   res.redirect("/");
 });
 
+server.listen(5000);
+
 io.on("connection", (socket) => {
   socket.on("clicked", (data) => {
     socket.broadcast.emit("clicked data", data);
@@ -27,5 +29,3 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("reset");
   });
 });
-
-server.listen(5000);
