@@ -13,7 +13,7 @@ app.get("*", function (_, res) {
   res.redirect("/");
 });
 
-server.listen(5000);
+server.listen(process.env.PORT || 5000);
 
 io.on("connection", (socket) => {
   socket.on("clicked", (data) => {
