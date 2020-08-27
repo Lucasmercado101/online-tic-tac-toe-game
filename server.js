@@ -9,11 +9,23 @@ app.get("/", function (_, res) {
   res.sendFile(__dirname + "/src/index.html");
 });
 
-io.on("connection", (client) => {
-  //   console.log("Client connected...");
-  //   client.on("join", (data) => {
-  //     console.log(data);
-  //   });
+app.get("*", function (_, res) {
+  res.redirect("/");
+});
+
+io.on("connection", (socket) => {
+  socket.on("clicked", (data) => {
+    socket.broadcast.emit("clicked data", data);
+  });
+  socket.on("picked", (data) => {
+    socket.broadcast.emit("picked", data);
+  });
+  socket.on("won", () => {
+    socket.broadcast.emit("lost");
+  });
+  socket.on("reset", () => {
+    socket.broadcast.emit("reset");
+  });
 });
 
 server.listen(5000);

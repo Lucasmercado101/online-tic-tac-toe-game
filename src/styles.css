@@ -12,12 +12,13 @@ html, body, * {
 }
 
 body {
+  position: relative;
   display: -ms-grid;
   display: grid;
   place-items: center;
 }
 
-.game-grid {
+#game-grid {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -31,7 +32,7 @@ body {
       grid-template-rows: repeat(3, 125px);
 }
 
-.game-grid div {
+#game-grid div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -43,26 +44,26 @@ body {
           align-items: center;
 }
 
-.center {
+#center {
   outline: 5px solid #145374;
 }
 
-.top-left {
+#top-left {
   border-right: 5px solid #145374;
   border-bottom: 5px solid #145374;
 }
 
-.top-right {
+#top-right {
   border-left: 5px solid #145374;
   border-bottom: 5px solid #145374;
 }
 
-.bottom-left {
+#bottom-left {
   border-right: 5px solid #145374;
   border-top: 5px solid #145374;
 }
 
-.bottom-right {
+#bottom-right {
   border-top: 5px solid #145374;
   border-left: 5px solid #145374;
 }
@@ -78,4 +79,66 @@ body {
 
 .ghost {
   color: rgba(238, 112, 87, 0.5);
+}
+
+#picker {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+#picker button {
+  cursor: pointer;
+  color: #ee6f57;
+  background: none;
+  padding: .1em .4em;
+  border: none;
+  font-size: 50px;
+}
+
+#picker button:hover {
+  color: #f6f5f5;
+}
+
+#end-game {
+  display: none;
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  font-size: 50px;
+  position: absolute;
+}
+
+#end-game > div {
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+#end-game > div button {
+  font-size: 35px;
+  margin-top: 25px;
+  color: #f6f5f5;
+  background: #145374;
+  border: none;
+  padding: .3em .7em;
+  border-radius: 15px;
+  cursor: pointer;
+  -webkit-transition: background 100ms linear, color 100ms linear, -webkit-transform 20ms linear;
+  transition: background 100ms linear, color 100ms linear, -webkit-transform 20ms linear;
+  transition: transform 20ms linear, background 100ms linear, color 100ms linear;
+  transition: transform 20ms linear, background 100ms linear, color 100ms linear, -webkit-transform 20ms linear;
+}
+
+#end-game > div button:hover {
+  color: #00334e;
+  background: #ee6f57;
+}
+
+#end-game > div button:active {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
 }

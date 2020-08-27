@@ -1,7 +1,13 @@
+$highlight: #f6f5f5
+$primary: #ee6f57
+$secondary: #145374
+$dark: #00334e
+
+  
 html, body
   height: 100%
-  color: #ee6f57
-  background: #00334e
+  color: $primary
+  background: $dark
 
 html, body, *
   box-sizing: border-box
@@ -9,10 +15,11 @@ html, body, *
   padding: 0
 
 body
+  position: relative
   display: grid
   place-items: center
 
-.game-grid
+#game-grid
   user-select: none
   font-size: 85px
   display: grid
@@ -23,24 +30,24 @@ body
     justify-content: center
     align-items: center
 
-.center
-  outline: 5px solid #145374
+#center
+  outline: 5px solid $secondary
 
-.top-left
-  border-right: 5px solid #145374
-  border-bottom: 5px solid #145374
+#top-left
+  border-right: 5px solid $secondary
+  border-bottom: 5px solid $secondary
 
-.top-right
-  border-left: 5px solid #145374
-  border-bottom: 5px solid #145374
+#top-right
+  border-left: 5px solid $secondary
+  border-bottom: 5px solid $secondary
 
-.bottom-left
-  border-right: 5px solid #145374
-  border-top: 5px solid #145374
+#bottom-left
+  border-right: 5px solid $secondary
+  border-top: 5px solid $secondary
 
-.bottom-right
-  border-top: 5px solid #145374
-  border-left: 5px solid #145374
+#bottom-right
+  border-top: 5px solid $secondary
+  border-left: 5px solid $secondary
 
 .title
   font-size: 50px
@@ -51,3 +58,44 @@ body
 
 .ghost
   color: rgba(238, 112, 87, 0.5)
+
+#picker
+  display: flex
+  justify-content: space-around
+  button
+    cursor: pointer
+    color: $primary
+    background: none
+    padding: .1em .4em
+    border: none
+    font-size: 50px
+    &:hover
+      color: $highlight
+
+#end-game
+  display: none
+  background: rgba(0, 0, 0, 0.5)
+  height: 100%
+  width: 100%
+  place-items: center
+  font-size: 50px
+  position: absolute
+  > div
+    display: grid
+    place-items: center
+    button
+      font-size: 35px
+      margin-top: 25px
+      color: $highlight
+      background: $secondary
+      border: none
+      padding: .3em .7em
+      border-radius: 15px
+      cursor: pointer
+      transition: transform 20ms linear, background 100ms linear, color 100ms linear
+      &:hover
+        color: $dark
+        background: $primary
+
+      &:active
+        transform: scale(.95)
