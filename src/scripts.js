@@ -1,4 +1,4 @@
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("/");
 const winningConditions = [
   [0, 1, 2],
   [3, 4, 5], // all left to right
