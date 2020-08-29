@@ -1,7 +1,6 @@
 html, body {
-  height: 100%;
-  color: #ee6f57;
-  background: #00334e;
+  min-height: 100%;
+  font-size: 18px;
 }
 
 html, body, * {
@@ -11,11 +10,151 @@ html, body, * {
   padding: 0;
 }
 
-body {
-  position: relative;
-  display: -ms-grid;
-  display: grid;
-  place-items: center;
+.landing {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  background: #145374;
+}
+
+.landing__title {
+  display: block;
+  text-align: center;
+  font-family: Source Code Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 6rem;
+  color: #ee6f57;
+}
+
+.landing__cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 264px;
+  height: 459px;
+  left: calc(50% - 364px/2 - 468px);
+  top: calc(50% - 559px/2 - 12.5px);
+  background: #00334e;
+  -webkit-box-shadow: 12px 15px 21px rgba(0, 0, 0, 0.25);
+          box-shadow: 12px 15px 21px rgba(0, 0, 0, 0.25);
+  border-radius: 28px;
+}
+
+.card p {
+  text-align: center;
+  color: #f6f5f5;
+  font-size: 3.5rem;
+}
+
+.card button {
+  background: #ee6f57;
+  color: white;
+  border-radius: 22px;
+  font-size: 3.8rem;
+  -webkit-transition: all 150ms linear;
+  transition: all 150ms linear;
+  padding: .5rem 1.5rem;
+}
+
+.card button:hover {
+  color: #ee6f57;
+  background-color: #145374;
+}
+
+@media (max-width: 1000px) {
+  html, body {
+    font-size: 14px;
+  }
+  .card {
+    width: 224px;
+    height: 419px;
+  }
+  .card button {
+    border-radius: 15px;
+  }
+}
+
+@media (max-width: 800px) {
+  html, body {
+    font-size: 11px;
+  }
+  .card {
+    width: 164px;
+    height: 299px;
+    border-radius: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  html, body {
+    font-size: 10px;
+  }
+  .card {
+    width: 144px;
+    height: 259px;
+    border-radius: 10px;
+  }
+  .card button {
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 500px) {
+  html, body {
+    font-size: 12px;
+  }
+  .landing {
+    margin-top: 10px;
+  }
+  .landing__title {
+    margin-bottom: 25px;
+  }
+  .landing__cards {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+  }
+  .card {
+    width: 90vw;
+    height: 275px;
+    border-radius: 10px;
+    margin-bottom: 50px;
+  }
+  .card p {
+    font-size: 4.5rem;
+  }
+  .card button {
+    font-size: 4.5em;
+    padding: .5rem 3.5rem;
+  }
 }
 
 #game-grid {
@@ -32,7 +171,7 @@ body {
       grid-template-rows: repeat(3, 125px);
 }
 
-#game-grid div {
+div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -89,7 +228,7 @@ body {
       justify-content: space-around;
 }
 
-#picker button {
+button {
   cursor: pointer;
   color: #ee6f57;
   background: none;
@@ -98,7 +237,7 @@ body {
   font-size: 50px;
 }
 
-#picker button:hover {
+button:hover {
   color: #f6f5f5;
 }
 

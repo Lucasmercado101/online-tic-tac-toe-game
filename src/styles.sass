@@ -1,68 +1,66 @@
-$highlight: #f6f5f5
-$primary: #ee6f57
-$secondary: #145374
-$dark: #00334e
-
-  
 html, body
-  height: 100%
-  color: $primary
-  background: $dark
+    min-height: 100%
+    font-size: 18px
 
 html, body, *
-  box-sizing: border-box
-  margin: 0
-  padding: 0
+    box-sizing: border-box
+    margin: 0
+    padding: 0
 
-body
-  position: relative
-  display: grid
-  place-items: center
+@import "sass/landing"
+@import "sass/colors"
+
+
+
+// body
+//   position: relative
+//   display: grid
+//   place-items: center
 
 #game-grid
-  user-select: none
-  font-size: 85px
-  display: grid
-  grid-template-columns: repeat(3, 125px)
-  grid-template-rows: repeat(3, 125px)
-  div
+    user-select: none
+    font-size: 85px
+    display: grid
+    grid-template-columns: repeat(3, 125px)
+    grid-template-rows: repeat(3, 125px)
+div
     display: flex
     justify-content: center
     align-items: center
 
 #center
-  outline: 5px solid $secondary
+    outline: 5px solid $secondary
 
 #top-left
-  border-right: 5px solid $secondary
-  border-bottom: 5px solid $secondary
+    border-right: 5px solid $secondary
+    border-bottom: 5px solid $secondary
 
 #top-right
-  border-left: 5px solid $secondary
-  border-bottom: 5px solid $secondary
+    border-left: 5px solid $secondary
+    border-bottom: 5px solid $secondary
 
 #bottom-left
-  border-right: 5px solid $secondary
-  border-top: 5px solid $secondary
+    border-right: 5px solid $secondary
+    border-top: 5px solid $secondary
 
 #bottom-right
-  border-top: 5px solid $secondary
-  border-left: 5px solid $secondary
+    border-top: 5px solid $secondary
+    border-left: 5px solid $secondary
 
 .title
-  font-size: 50px
+    font-size: 50px
 
 .subtitle
-  font-size: 30px
-  text-align: center
+    font-size: 30px
+    text-align: center
 
 .ghost
-  color: rgba(238, 112, 87, 0.5)
+    color: rgba(238, 112, 87, 0.5)
 
 #picker
-  display: flex
-  justify-content: space-around
-  button
+    display: flex
+    justify-content: space-around
+button
     cursor: pointer
     color: $primary
     background: none
@@ -70,32 +68,32 @@ body
     border: none
     font-size: 50px
     &:hover
-      color: $highlight
+        color: $highlight
 
 #end-game
-  display: none
-  background: rgba(0, 0, 0, 0.5)
-  height: 100%
-  width: 100%
-  place-items: center
-  font-size: 50px
-  position: absolute
-  > div
-    display: grid
+    display: none
+    background: rgba(0, 0, 0, 0.5)
+    height: 100%
+    width: 100%
     place-items: center
-    button
-      font-size: 35px
-      margin-top: 25px
-      color: $highlight
-      background: $secondary
-      border: none
-      padding: .3em .7em
-      border-radius: 15px
-      cursor: pointer
-      transition: transform 20ms linear, background 100ms linear, color 100ms linear
-      &:hover
-        color: $dark
-        background: $primary
+    font-size: 50px
+    position: absolute
+    > div
+        display: grid
+        place-items: center
+        button
+            font-size: 35px
+            margin-top: 25px
+            color: $highlight
+            background: $secondary
+            border: none
+            padding: .3em .7em
+            border-radius: 15px
+            cursor: pointer
+            transition: transform 20ms linear, background 100ms linear, color 100ms linear
+            &:hover
+                color: $dark
+                background: $primary
 
-      &:active
-        transform: scale(.95)
+            &:active
+                transform: scale(.95)

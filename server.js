@@ -4,9 +4,10 @@ var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 
 app.use(express.static(__dirname + "/src"));
+app.set("view engine", "ejs");
 
 app.get("/", function (_, res) {
-  res.sendFile(__dirname + "/src/index.html");
+  res.render("index");
 });
 
 app.get("*", function (_, res) {

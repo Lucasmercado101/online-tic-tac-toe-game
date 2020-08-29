@@ -1,0 +1,113 @@
+@import "colors"
+
+.landing
+    display: flex
+    flex-direction: column
+    justify-content: space-evenly
+    background: $secondary
+
+    &__title
+        display: block
+        text-align: center
+        font-family: Source Code Pro
+        font-style: normal
+        font-weight: normal
+        font-size: 6rem
+
+        color: $primary
+    
+    &__cards
+        display: flex
+        justify-content: space-evenly
+
+.card
+    display: flex
+    flex-direction: column
+    justify-content: space-evenly
+    width: 264px 
+    height: 459px 
+    left: calc(50% - 364px/2 - 468px) 
+    top: calc(50% - 559px/2 - 12.5px) 
+
+    background: $dark
+    box-shadow: 12px 15px 21px rgba(0, 0, 0, 0.25) 
+    border-radius: 28px
+
+    p
+        text-align: center
+        color: $highlight
+        font-size: 3.5rem 
+
+    button
+        background: $primary
+        color: white
+        border-radius: 22px
+        font-size: 3.8rem
+        transition: all 150ms linear
+        padding: .5rem 1.5rem
+        &:hover
+            color: $primary
+            background-color: $secondary
+
+@media ( max-width: 1000px )
+
+    html,body
+        font-size: 14px
+
+    .card
+        width: 224px 
+        height: 419px 
+
+        button
+            border-radius: 15px
+
+@media ( max-width: 800px )
+
+    html,body
+        font-size: 11px
+
+    .card
+        width: 164px 
+        height: 299px 
+        border-radius: 15px
+
+@media ( max-width: 600px )
+
+    html,body
+        font-size: 10px
+
+    .card
+        width: 144px 
+        height: 259px 
+        border-radius: 10px
+
+        button
+            border-radius: 8px
+
+@media ( max-width: 500px )
+
+    html,body
+        font-size: 12px
+
+
+    .landing
+        margin-top: 10px
+        &__title
+            margin-bottom: 25px
+
+        &__cards
+            flex-direction: column
+            justify-content: space-evenly
+
+    .card
+        width: 90vw 
+        height: 275px 
+        border-radius: 10px
+        margin-bottom: 50px
+
+        p
+            font-size: 4.5rem
+
+        button
+            font-size: 4.5em
+            padding: .5rem 3.5rem
