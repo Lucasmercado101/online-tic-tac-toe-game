@@ -11,17 +11,40 @@ const winningConditions = [
   [0, 4, 8],
   [6, 4, 2], //diagonals
 ];
-
+//TODO: game logic for when the board is full
 //--------------------------------
 
+let username = "Someone";
 let turn = true;
 let chosenSymbol = "";
 
 socket.on("connect", () => {
-  // socket.emit("join", "Hello World from client");
-  // socket.on('disconnect', () => {
-  //   console.log('user disconnected');
-  // });
+  socket.emit("joined room", roomNumber);
+});
+
+socket.on("someone joined", () => {
+  $("#messages").append(
+    `<div class="message"><span class="you">Someone Joined</span></div>`
+  );
+});
+
+socket.on("message", (data) => {
+  console.log(data);
+  $("#messages").append(
+    `<div class="message"><span class="rival">${data.username}</span>: ${data.message}</div>`
+  );
+});
+
+socket.on("user left", (user) => {
+  $("#messages").append(
+    `<div class="message"><span class="rival">${user}</span> has left</div>`
+  );
+});
+
+socket.on("someone changed username", (data) => {
+  $("#messages").append(
+    `<div class="message"><span class="you">"${data.oldName}"</span> is now <span class="you"> "${data.newName}"</span></div>`
+  );
 });
 
 socket.on("clicked data", (boardData) => {
@@ -37,6 +60,10 @@ socket.on("clicked data", (boardData) => {
   spaces[8].innerText = boardData[8];
   turn = true;
   $(".subtitle").text("Turn: You");
+});
+
+socket.on("event", () => {
+  console.log("event");
 });
 
 socket.on("lost", () => {
@@ -76,6 +103,36 @@ $(function () {
   const spaces = $("#game-grid").children();
 
   handleSidePick();
+
+  $("#message-form").submit(function (e) {
+    e.preventDefault(); // Prevents the page from refreshing
+    const message = $("#messageBox").val();
+    $("#messageBox").val("");
+    socket.emit("message", {
+      room: roomNumber,
+      messageData: { username, message },
+    });
+    $("#messages").append(
+      `<div class="message"><span class="you">You</span>: ${message}</div>`
+    );
+  });
+
+  $("#name-form").submit(function (e) {
+    e.preventDefault(); // Prevents the page from refreshing
+    if (!$("#userNameBox").val()) return;
+    const oldUsername = username;
+    username = $("#userNameBox").val();
+    $("#userNameBox").val("");
+    $("#userNameBox").attr("placeholder", username);
+
+    socket.emit("changed username", {
+      room: roomNumber,
+      userData: { oldName: oldUsername, newName: username },
+    });
+    $("#messages").append(
+      `<div class="message">Your username is now is now <span class="you"> ${username}</span></div>`
+    );
+  });
 
   for (child of spaces) {
     $(child).hover(

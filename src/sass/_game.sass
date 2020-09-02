@@ -1,0 +1,159 @@
+
+#game-board
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
+    align-items: center
+    background: $dark
+    
+#board
+    &__header
+        display: flex
+        flex-direction: column
+
+#game-grid
+    justify-content: center
+    user-select: none
+    font-size: 85px
+    display: grid
+    grid-template-columns: repeat(3, 125px)
+    grid-template-rows: repeat(3, 125px)
+
+    div
+        color: $primary
+        height: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+
+#center
+    outline: 5px solid $secondary
+
+#top-left
+    border-right: 5px solid $secondary
+    border-bottom: 5px solid $secondary
+
+#top-right
+    border-left: 5px solid $secondary
+    border-bottom: 5px solid $secondary
+
+#bottom-left
+    border-right: 5px solid $secondary
+    border-top: 5px solid $secondary
+
+#bottom-right
+    border-top: 5px solid $secondary
+    border-left: 5px solid $secondary
+
+.title
+    text-align: center
+    display: block
+    font-size: 50px
+    color: $primary
+
+.subtitle
+    color: $highlight
+    font-size: 30px
+    text-align: center
+
+.ghost
+    color: rgba(238, 112, 87, 0.5)
+
+#picker
+    display: flex
+    justify-content: center
+
+button
+    cursor: pointer
+    color: $primary
+    background: none
+    padding: .1em .4em
+    border: none
+    font-size: 50px
+    &:hover
+        color: $highlight
+
+#end-game
+    display: none
+    background: rgba(0, 0, 0, 0.5)
+    height: 100%
+    width: 100%
+    place-items: center
+    font-size: 50px
+    position: absolute
+    > div
+        display: grid
+        place-items: center
+        button
+            font-size: 35px
+            margin-top: 25px
+            color: $highlight
+            background: $secondary
+            border: none
+            padding: .3em .7em
+            border-radius: 15px
+            cursor: pointer
+            transition: transform 20ms linear, background 100ms linear, color 100ms linear
+            &:hover
+                color: $dark
+                background: $primary
+
+            &:active
+                transform: scale(.95)
+
+#chatbox
+    position: relative
+    height: 80vh
+    overflow-y: scroll
+    max-width: 350px
+    min-height: 100%
+    background: $secondary
+    flex-grow: 1
+    #messages
+        min-height: 100%
+        *
+            font-size: 2rem
+    form
+        display: flex
+        position: sticky
+        bottom: 0
+        input, input[type="submit"]
+            font-size: 1.5rem
+            height: 40px
+        input
+            width: 70%
+        input[type="submit"]
+            border: none
+            color: $primary
+            transition: color 110ms linear
+            width: 30%
+            background: $dark
+            &:hover
+                color: $highlight
+
+.message
+    color: $highlight
+
+.you 
+    color: $primary
+
+.message
+    font-size: 1.3rem
+
+@media ( max-width: 800px )
+
+    html,body
+        font-size: 18px
+
+    #board
+        min-height: 90vh
+        display: flex
+        flex-direction: column
+        justify-content: space-evenly
+    #game-board
+        flex-direction: column
+
+    #chatbox
+        margin-top: 50px
+        max-width: 90vw
+        width: 90vw

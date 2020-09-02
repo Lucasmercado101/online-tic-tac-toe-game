@@ -4,10 +4,23 @@ var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 
 app.use(express.static(__dirname + "/src"));
+app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 
 app.get("/", function (_, res) {
   res.render("index");
+});
+
+app.get("/room/:number", function (req, res) {
+  if (
+    req.params.number !== "1" &&
+    req.params.number !== "2" &&
+    req.params.number !== "3"
+  ) {
+    return res.redirect("/");
+  }
+  console.log(req.params.number);
+  res.render("game", { roomNumber: req.params.number });
 });
 
 app.get("*", function (_, res) {
@@ -28,5 +41,29 @@ io.on("connection", (socket) => {
   });
   socket.on("reset", () => {
     socket.broadcast.emit("reset");
+  });
+
+  socket.on("joined room", (roomNumber) => {
+    socket.join(roomNumber);
+    socket.to(roomNumber).emit("someone joined");
+  });
+
+  socket.on("message", (data) => {
+    socket.to(data.room).broadcast.emit("message", {
+      message: data.messageData.message,
+      username: data.messageData.username,
+    });
+  });
+
+  socket.on("changed username", (data) => {
+    socket.to(data.room).broadcast.emit("someone changed username", {
+      oldName: data.userData.oldName,
+      newName: data.userData.newName,
+    });
+    username = data.userData.newName;
+  });
+
+  socket.on("disconnecting", () => {
+    // socket.to(currentRoom).broadcast.emit("user left", username);
   });
 });
