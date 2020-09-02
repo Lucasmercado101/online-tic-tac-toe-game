@@ -19,7 +19,6 @@ app.get("/room/:number", function (req, res) {
   ) {
     return res.redirect("/");
   }
-  console.log(req.params.number);
   res.render("game", { roomNumber: req.params.number });
 });
 
@@ -46,6 +45,7 @@ io.on("connection", (socket) => {
   socket.on("joined room", (roomNumber) => {
     socket.join(roomNumber);
     socket.to(roomNumber).emit("someone joined");
+    socket.myData = { username: "Someone", roomID: roomNumber };
   });
 
   socket.on("message", (data) => {
@@ -60,10 +60,13 @@ io.on("connection", (socket) => {
       oldName: data.userData.oldName,
       newName: data.userData.newName,
     });
-    username = data.userData.newName;
+    socket.myData.username = data.userData.newName;
   });
 
   socket.on("disconnecting", () => {
-    // socket.to(currentRoom).broadcast.emit("user left", username);
+    const hasJoinedARoom = Object.keys(socket.myData) !== 0;
+    if (hasJoinedARoom) {
+      socket.to(socket.myData.roomID).emit("user left", socket.myData.username);
+    }
   });
 });

@@ -36,6 +36,7 @@ socket.on("message", (data) => {
 });
 
 socket.on("user left", (user) => {
+  console.log(user);
   $("#messages").append(
     `<div class="message"><span class="rival">${user}</span> has left</div>`
   );
