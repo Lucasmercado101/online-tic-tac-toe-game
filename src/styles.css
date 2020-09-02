@@ -111,6 +111,12 @@ html, body, * {
     height: 299px;
     border-radius: 15px;
   }
+  .card p {
+    font-size: 2.5rem;
+  }
+  .card a {
+    font-size: 3em;
+  }
 }
 
 @media (max-width: 600px) {
@@ -142,10 +148,10 @@ html, body, * {
     margin-bottom: 50px;
   }
   .card p {
-    font-size: 4.5rem;
+    font-size: 3rem;
   }
   .card a {
-    font-size: 4.5em;
+    font-size: 4em;
     padding: .5rem 3.5rem;
   }
 }
@@ -278,13 +284,18 @@ button:hover {
   width: 100%;
   place-items: center;
   font-size: 50px;
-  position: absolute;
+  position: fixed;
+  top: 0;
 }
 
 #end-game > div {
   display: -ms-grid;
   display: grid;
   place-items: center;
+}
+
+#end-game > div p {
+  color: #f6f5f5;
 }
 
 #end-game > div button {

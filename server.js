@@ -63,6 +63,10 @@ io.on("connection", (socket) => {
     socket.myData.username = data.userData.newName;
   });
 
+  socket.on("draw", (roomNumber) => {
+    socket.to(roomNumber).broadcast.emit("draw");
+  });
+
   socket.on("disconnecting", () => {
     const hasJoinedARoom = Object.keys(socket.myData) !== 0;
     if (hasJoinedARoom) {

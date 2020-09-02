@@ -29,14 +29,12 @@ socket.on("someone joined", () => {
 });
 
 socket.on("message", (data) => {
-  console.log(data);
   $("#messages").append(
     `<div class="message"><span class="rival">${data.username}</span>: ${data.message}</div>`
   );
 });
 
 socket.on("user left", (user) => {
-  console.log(user);
   $("#messages").append(
     `<div class="message"><span class="rival">${user}</span> has left</div>`
   );
@@ -72,11 +70,17 @@ socket.on("lost", () => {
   $("#end-game").css("display", "grid").hide().show(250);
 });
 
+socket.on("draw", () => {
+  $("#won-lose-text").text("Draw");
+  $("#end-game").css("display", "grid").hide().show(250);
+});
+
 // Handle picked
 
 socket.on("picked", (data) => {
-  console.log("picked");
-  $("#picker").slideUp(500);
+  $("#picker").css("pointer-events", "none");
+  $(data === "X" ? "#selectX" : "#selectO").slideUp(500);
+
   $(".subtitle").text("Turn: Other");
   $(".subtitle").slideDown(500);
   turn = false;
@@ -87,9 +91,9 @@ const handleSidePick = () => {
   const picked = (side) => {
     chosenSymbol = side;
     $("#picker").css("pointer-events", "none");
-    $("#picker").slideUp(500, () => $("#picker").css("pointer-events", "auto"));
-    socket.emit("picked", side);
     turn = true;
+    $(side === "X" ? "#selectO" : "#selectX").slideUp(500);
+    socket.emit("picked", side);
     $(".subtitle").text("Turn: You");
     $(".subtitle").slideDown(500);
   };
@@ -148,6 +152,7 @@ $(function () {
         }
       }
     );
+
     $(child).click(function () {
       if (turn && chosenSymbol && $(this).find("span.ghost").length !== 0) {
         $(this).text(chosenSymbol);
@@ -165,6 +170,13 @@ $(function () {
           spacesData[7].innerText,
           spacesData[8].innerText,
         ];
+
+        const noEmptySpaces = () => gameData.every((i) => i !== "");
+        if (noEmptySpaces()) {
+          socket.emit("draw", roomNumber);
+          $("#won-lose-text").text("Draw");
+          $("#end-game").css("display", "grid").hide().show(250);
+        }
 
         const won = () =>
           winningConditions.some((winSet) => {
@@ -193,7 +205,10 @@ $(function () {
     for (let space of $("#game-grid").children()) {
       space.innerText = "";
     }
-    $("#picker").slideDown(500);
+    $("#selectO").slideDown(500);
+    $("#selectX").slideDown(500);
+    $("#picker").css("pointer-events", "auto");
+
     $(".subtitle").slideUp(500, function () {
       $(this).text("");
     });
