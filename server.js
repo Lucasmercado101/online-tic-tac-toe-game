@@ -3,12 +3,14 @@ var app = express();
 var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 
+const rooms = [0, 0, 0];
+
 app.use(express.static(__dirname + "/src"));
 app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 
 app.get("/", function (_, res) {
-  res.render("index");
+  res.render("index", { rooms });
 });
 
 app.get("/room/:number", function (req, res) {
@@ -44,6 +46,8 @@ io.on("connection", (socket) => {
 
   socket.on("joined room", (roomNumber) => {
     socket.join(roomNumber);
+    rooms[roomNumber - 1]++;
+    socket.broadcast.emit("update rooms", rooms);
     socket.to(roomNumber).emit("someone joined");
     socket.myData = { username: "Someone", roomID: roomNumber };
   });
@@ -68,8 +72,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnecting", () => {
-    const hasJoinedARoom = Object.keys(socket.myData) !== 0;
+    const hasJoinedARoom =
+      socket.hasOwnProperty("myData") && Object.keys(socket.myData) !== 0;
     if (hasJoinedARoom) {
+      rooms[socket.myData.roomID - 1]--;
+      socket.broadcast.emit("update rooms", rooms);
       socket.to(socket.myData.roomID).emit("user left", socket.myData.username);
     }
   });

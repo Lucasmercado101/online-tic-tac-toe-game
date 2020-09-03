@@ -15,21 +15,13 @@
 <body class="landing">
     <h1 class="landing__title">TIC TAC TOE</h1>
     <div class="landing__cards">
+        <% for (var i =0; i <rooms.length;  i++ ) { %>
         <div class="card">
-            <p>0/2 <br>
+            <p><%= rooms[i] %> <br>
                 Players</p>
-            <a href="/room/1">Play</a>
+            <a href="/room/<%=i+1%>">Play</a>
         </div>
-        <div class="card">
-            <p>0/2 <br>
-                Players</p>
-            <a href="/room/2">Play</a>
-        </div>
-        <div class="card">
-            <p>0/2 <br>
-                Players</p>
-            <a href="/room/3">Play</a>
-        </div>
+        <% } %>
     </div>
 
 </body>

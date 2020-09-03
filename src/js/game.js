@@ -11,7 +11,6 @@ const winningConditions = [
   [0, 4, 8],
   [6, 4, 2], //diagonals
 ];
-//TODO: game logic for when the board is full
 //--------------------------------
 
 let username = "Someone";
