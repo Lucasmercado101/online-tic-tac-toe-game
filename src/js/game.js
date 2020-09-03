@@ -79,6 +79,7 @@ socket.on("draw", () => {
 socket.on("picked", (data) => {
   $("#picker").css("pointer-events", "none");
   $(data === "X" ? "#selectX" : "#selectO").slideUp(500);
+  $(data === "O" ? "#selectX" : "#selectO").slideDown(500);
 
   $(".subtitle").text("Turn: Other");
   $(".subtitle").slideDown(500);
