@@ -92,6 +92,7 @@ const handleSidePick = () => {
     $("#picker").css("pointer-events", "none");
     turn = true;
     $(side === "X" ? "#selectO" : "#selectX").slideUp(500);
+    $(side === "O" ? "#selectO" : "#selectX").slideDown(500);
     socket.emit("picked", side);
     $(".subtitle").text("Turn: You");
     $(".subtitle").slideDown(500);
