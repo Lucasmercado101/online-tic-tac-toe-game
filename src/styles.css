@@ -343,7 +343,7 @@ button:hover {
   font-size: 2rem;
 }
 
-#chatbox form {
+#chatbox #username-input, #chatbox #message-input {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -352,16 +352,16 @@ button:hover {
   bottom: 0;
 }
 
-#chatbox form input, #chatbox form input[type="submit"] {
+#chatbox #username-input input, #chatbox #username-input input[type="submit"], #chatbox #message-input input, #chatbox #message-input input[type="submit"] {
   font-size: 1.5rem;
   height: 40px;
 }
 
-#chatbox form input {
+#chatbox #username-input input, #chatbox #message-input input {
   width: 70%;
 }
 
-#chatbox form input[type="submit"] {
+#chatbox #username-input input[type="submit"], #chatbox #message-input input[type="submit"] {
   border: none;
   color: #ee6f57;
   -webkit-transition: color 110ms linear;
@@ -370,7 +370,7 @@ button:hover {
   background: #00334e;
 }
 
-#chatbox form input[type="submit"]:hover {
+#chatbox #username-input input[type="submit"]:hover, #chatbox #message-input input[type="submit"]:hover {
   color: #f6f5f5;
 }
 

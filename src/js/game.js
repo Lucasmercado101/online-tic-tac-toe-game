@@ -45,6 +45,8 @@ socket.on("someone changed username", (data) => {
   );
 });
 
+socket.on("reset", () => resetAll());
+
 socket.on("clicked data", (boardData) => {
   const spaces = $("#game-grid").children();
   spaces[0].innerText = boardData[0];
@@ -74,8 +76,6 @@ socket.on("draw", () => {
   $("#end-game").css("display", "grid").hide().show(250);
 });
 
-// Handle picked
-
 socket.on("picked", (data) => {
   $("#picker").css("pointer-events", "none");
   $(data === "X" ? "#selectX" : "#selectO").slideUp(500);
@@ -87,61 +87,13 @@ socket.on("picked", (data) => {
   chosenSymbol = data === "X" ? "O" : "X";
 });
 
-const handleSidePick = () => {
-  const picked = (side) => {
-    chosenSymbol = side;
-    $("#picker").css("pointer-events", "none");
-    turn = true;
-    $(side === "X" ? "#selectO" : "#selectX").slideUp(500);
-    $(side === "O" ? "#selectO" : "#selectX").slideDown(500);
-    socket.emit("picked", side);
-    $(".subtitle").text("Turn: You");
-    $(".subtitle").slideDown(500);
-  };
-
-  $("#selectX").click(() => picked("X"));
-  $("#selectO").click(() => picked("O"));
-};
-
-// --------------
-
 $(function () {
-  const spaces = $("#game-grid").children();
-
   handleSidePick();
+  handleMessageForm();
+  handleUsernameChange();
 
-  $("#message-form").submit(function (e) {
-    e.preventDefault(); // Prevents the page from refreshing
-    const message = $("#messageBox").val();
-    $("#messageBox").val("");
-    socket.emit("message", {
-      room: roomNumber,
-      messageData: { username, message },
-    });
-    $("#messages").append(
-      `<div class="message"><span class="you">You</span>: ${message}</div>`
-    );
-  });
-
-  $("#name-form").submit(function (e) {
-    e.preventDefault(); // Prevents the page from refreshing
-    if (!$("#userNameBox").val()) return;
-    const oldUsername = username;
-    username = $("#userNameBox").val();
-    $("#userNameBox").val("");
-    $("#userNameBox").attr("placeholder", username);
-
-    socket.emit("changed username", {
-      room: roomNumber,
-      userData: { oldName: oldUsername, newName: username },
-    });
-    $("#messages").append(
-      `<div class="message">Your username is now is now <span class="you"> ${username}</span></div>`
-    );
-  });
-
-  for (child of spaces) {
-    $(child).hover(
+  $("#game-grid div").each(function () {
+    $(this).hover(
       function () {
         if (!$(this).text()) {
           $(this).append($(`<span class="ghost">${chosenSymbol}</span>`));
@@ -154,7 +106,7 @@ $(function () {
       }
     );
 
-    $(child).click(function () {
+    $(this).click(function () {
       if (turn && chosenSymbol && $(this).find("span.ghost").length !== 0) {
         $(this).text(chosenSymbol);
         $(this).removeClass("ghost");
@@ -177,16 +129,7 @@ $(function () {
           socket.emit("draw", roomNumber);
           $("#won-lose-text").text("Draw");
           $("#end-game").css("display", "grid").hide().show(250);
-        }
-
-        const won = () =>
-          winningConditions.some((winSet) => {
-            return winSet.every((index) => {
-              return gameData[index] === chosenSymbol;
-            });
-          });
-
-        if (won()) {
+        } else if (won(gameData)) {
           socket.emit("won");
           $("#won-lose-text").text("You win");
           $("#end-game").css("display", "grid").hide().show(250);
@@ -196,31 +139,88 @@ $(function () {
         $(".subtitle").text("Turn: Other");
       }
     });
-  }
-
-  const resetAll = () => {
-    $("#end-game").hide(250, function () {
-      $("#won-lose-text").text("");
-    });
-    chosenSymbol = "";
-    for (let space of $("#game-grid").children()) {
-      space.innerText = "";
-    }
-    $("#selectO").slideDown(500);
-    $("#selectX").slideDown(500);
-    $("#picker").css("pointer-events", "auto");
-
-    $(".subtitle").slideUp(500, function () {
-      $(this).text("");
-    });
-  };
+  });
 
   $("#reset").click(() => {
     socket.emit("reset");
     resetAll();
   });
-
-  socket.on("reset", () => {
-    resetAll();
-  });
 });
+
+function handleSidePick() {
+  const picked = (side) => {
+    chosenSymbol = side;
+    $("#picker").css("pointer-events", "none");
+    turn = true;
+    $(side === "X" ? "#selectO" : "#selectX").slideUp(500);
+    $(side === "O" ? "#selectO" : "#selectX").slideDown(500);
+    socket.emit("picked", side);
+    $(".subtitle").text("Turn: You");
+    $(".subtitle").slideDown(500);
+  };
+
+  $("#selectX").click(() => picked("X"));
+  $("#selectO").click(() => picked("O"));
+}
+
+function handleUsernameChange() {
+  $("#username-input").submit(function (e) {
+    e.preventDefault();
+    const newUsername = $("#userNameBox").val();
+    if (!newUsername) return;
+    const oldUsername = username;
+    username = newUsername;
+    $("#userNameBox").val("");
+    $("#userNameBox").attr("placeholder", newUsername);
+
+    socket.emit("changed username", {
+      room: roomNumber,
+      userData: { oldName: oldUsername, newName: newUsername },
+    });
+    $("#messages").append(
+      `<div class="message">Your username is now is now <span class="you"> ${username}</span></div>`
+    );
+  });
+}
+
+function handleMessageForm() {
+  $("#message-input").submit(function (e) {
+    e.preventDefault();
+    const message = $("#messageBox").val();
+    if (!message) return;
+    $("#messageBox").val("");
+    socket.emit("message", {
+      room: roomNumber,
+      messageData: { username, message },
+    });
+    $("#messages").append(
+      `<div class="message"><span class="you">You</span>: ${message}</div>`
+    );
+  });
+}
+
+function won(data) {
+  return winningConditions.some((winSet) => {
+    return winSet.every((index) => {
+      return data[index] === chosenSymbol;
+    });
+  });
+}
+
+function resetAll() {
+  $("#end-game").hide(250, function () {
+    $("#won-lose-text").text("");
+  });
+  chosenSymbol = "";
+  $("#game-grid div").each(function () {
+    $(this).text("");
+  });
+
+  $("#selectO").slideDown(500);
+  $("#selectX").slideDown(500);
+  $("#picker").css("pointer-events", "auto");
+
+  $(".subtitle").slideUp(500, function () {
+    $(this).text("");
+  });
+}
