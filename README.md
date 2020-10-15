@@ -3,10 +3,10 @@
 
 <p align="center">
 
-  <h3 align="center">Crown World</h3>
+  <h3 align="center">Online Tic Tac Toe Game</h3>
 
   <p align="center">
-    An E-commerce Website
+    An online tic tac toe game
   </p>
 </p>
 
@@ -26,7 +26,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-I originally made this website to learn React, Redux and Firestore. I later rebuild it from scratch with react hooks so that the code is improved.
+I made this simple tic tac toe game to learn how to use Socket.IO
 
 ### Built With
 * [Node.js](https://nodejs.org)
